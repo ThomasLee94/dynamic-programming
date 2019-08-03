@@ -33,11 +33,16 @@
 import string
 
 class KnapsackTreeNode:
-    def __init__(self, weight: int, value: int, label: str):
+    def __init__(self, label: str, weight: int, value=0):
         self.weight = weight
         self.value = value
         self.label = label
         self.children = dict()
+
+        # EXAMPLE CHILDREN DICT
+            #  {
+                # "root": KnapsackTreeNode(LABEL, max_bag_cap - VALUE)
+            # }
            
 class KnapsackTree:
     """
@@ -49,30 +54,34 @@ class KnapsackTree:
         # create a datastructure that keeps track of branches. Don't bother building
         # from A -> B -> C -> D when we already have a A -> C -> B -> D 
 
-    def __init__(self):
-        self.root = KnapsackTreeNode("root")
+    def __init__(self, max_bag_cap: int):
+        self.root = KnapsackTreeNode("root", max_bag_cap)
         
     def create_tree(self, items: [[int, int]]):
         """
             Creates a tree based off input items.
             Refer to example tree. 
         """
+        node = self.root
 
         # create unique labels
         labels = list()
         for i in range(len(items)):
             labels.append(string[i])
+        
+        for label in labels:
+
 
         # subproblem_1: decide whether or not to take the item
         for item in items:
-
+            pass
     
-    def memoize_branches(self):
+    def memoize_branches(self)->[(int)]:
         pass
     
-    def memoize_items (self):
-        pass
-    
+    , "root"
+    , "root"
+    , "root"
     def return_max_value(self):
         pass
 
