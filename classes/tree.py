@@ -1,4 +1,4 @@
-from node import KnapsackTreeNode
+from classes.node import KnapsackTreeNode
 import string
 
 # =================================================================
@@ -35,7 +35,10 @@ class KnapsackTree:
         self.root = KnapsackTreeNode("root", max_bag_cap)
     
     def create_labels(self, items)->set:
-        # create unique labels for all items
+        """
+            Creates unique labels for items to be evaluated for memoization.
+        """
+
         labels_set = set()
         labels_list = list()
         for i in range(len(items)):
@@ -44,9 +47,9 @@ class KnapsackTree:
         
         return labels_set, labels_list
         
-    def insert_all_items(self, items: [[int, int]], items_label_set=None, node=None) -> object:
+    def insert_all_items(self, items: [[int, int]], parent_node=None, items_label_set=None, node=None) -> object:
         """
-            Creates tree based on items.
+            Creates tree based on items per level.
             Refer to example tree. 
         """
         # create a smart tree (will be unbalanced) 
@@ -61,27 +64,57 @@ class KnapsackTree:
         if items_label_set is None:
             items_label_set, labels_list = self.create_labels(items)
         
+        # recurstion vars
+        parent = None
+        child = None
+        
         # Recursively create tree
         for i in range(items):
             if KnapsackTree is None:
+                # init vars
                 item_label = labels_list[i]
                 item_weight = items[i][0]
                 item_value = items[i][1]
-                # check if label exists in children dict
-                if not node.children[labels_list[i]]:
-                    # check if max weight has been reached
-                    if (node.weight - item_weight) <= 0:
-                        
-                        # update values accordingly
-                        item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
-                # if it does, traverse through tree
-                node = node.children[item_label]
+                # start of recursion, no parent
+                if parent_node is None:
+                    # check if label exists in children dict
+                    if not node.children[labels_list[i]]:
+                        # check if max weight has been reached
+                        if (node.weight - item_weight) <= 0:
+                            
+                            # update values accordingly
+                            item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
+                else:
+                    parent_label = parent.label
+                    child_label = child.label
+                    self.memoize_branches(parent_label, child_label)
+                # if it does, traverse through tree and create key-value pairs
+                parent = node
+                child = node.children[item_label]
 
         # subproblem_1: decide whether or not to take the item
-        return self.insert_all_items(items, items_label_set, node)
+        return self.insert_all_items(items, items_label_set, parent, child)
     
-    def memoize_branches(self)->[(int)]:
-        pass
+    def memoize_branches(self, parent_label, child_label):
+        """
+            Creates a 2d list of memoized labels 
+        """
+        # EXAMPLE MEMOIZATION OF BRANCHES
+        # [
+        #   ["root", "a", "b"],
+        #   ["root", "a", "c"],
+        #   ["root", "b", "a"],
+        #   ["root", "b", "c"],
+        #   ["root", "c", "a"],
+        #   ["root", "c", "b"],
+        # ]
+
+        branches = list()
+
+        for label_ in branches:
+            
+            if len(branches) == 0:
+                branches.append([parent_label, child_label])
 
         # if path exists, don't create
 
