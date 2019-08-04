@@ -122,8 +122,7 @@ class KnapsackTree:
             node = node.children[item_label]
 
         # subproblem_1: decide whether or not to take the item
-
-        if node.
+        return self.insert_all_items(items, items_label_set, node)
     
     def memoize_branches(self)->[(int)]:
         pass
