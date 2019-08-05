@@ -29,10 +29,13 @@ import string
 
 class KnapsackTree:
     """
-        This will create a tree based off items input
+        This will create a tree based off items input. 
     """
 
     def __init__(self, max_bag_cap: int):
+        """
+            Initialises tree with max knapsack capacity. 
+        """
         self.root = KnapsackTreeNode("root", max_bag_cap)
     
     def create_labels(self, items)->set:
@@ -83,32 +86,35 @@ class KnapsackTree:
                         if (node.weight - item_weight) <= 0:
                             # *** CONDITION TO CHECK IF ITEM LABEL IS NOT IN A PATH IN ANOTHER BRANCH ON A HIGHER LEVEL***
                             if memoized_branches is not None:
+                                # iterate through inner 2d list of memoized branches
                                 for branch in memoized_branches:
                                     if item_label not in branch[-1]:
                                         # IF ITEM NOT IN ANY OTHER BRANCH ON A +1 LEVEL
                                         if not parent.childred[item_label]:
-                                            # update values accordingly
+                                            # add key-value pairs
                                             item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
         
                 else:
                     # vars for memoization
                     parent_label = parent.label
                     child_label = child.label
-                    # if it does, traverse through tree and create key-value pairs
+                    # memoize branch labels
                     self.memoize_branches(parent_label, child_label)
 
+                # keeping track of parent and children to check other branches when creating new ones.
                 parent = node
-                # Create key-value pairs
                 child = node.children[item_label]
-        
+
+            # recursive call, create memoized 2d list for init.
             if memoized_branches is None:
                 memoized_branches_ = self.memoize_branches(parent_label, child_label)
                 return self.insert_all_items(items, memoized_branches_, items_label_set, parent, child)
+            # 1st recursive call onwards
             return self.insert_all_items(items, memoized_branches, items_label_set, parent, child)
     
     def memoize_branches(self, parent_label, child_label, branches=None):
         """
-            Creates a 2d list of memoized labels 
+            Creates a 2d list of memoized labels of branches.
         """
         # EXAMPLE MEMOIZATION OF BRANCHES
         # [

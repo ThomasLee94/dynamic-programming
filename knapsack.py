@@ -8,7 +8,7 @@
 #     [[size3, value3], [size5,value5]]
 # =================================================================
 
-from classe.tree import KnapsackTree
+from classes.tree import KnapsackTree
 
 def __main__():
     items = [[3,4],[2,3],[1,1]]
