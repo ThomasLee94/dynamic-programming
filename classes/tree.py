@@ -22,6 +22,7 @@ import string
     #             /  \        /  \       /  \ 
     #            /   \       /   \      /   \
     #         (0,7) (1,5)  (0,7)(2,4) (1,5) (2,4)
+    #           ^           X           X     X
     #          a,b   a,c   b,a   b,c   c,a   c,b
     # ==> MAXIMUM VALUE is (0,7), a->b or b->a
 # =================================================================
@@ -47,10 +48,12 @@ class KnapsackTree:
         
         return labels_set, labels_list
         
-    def insert_all_items(self, items: [[int, int]], parent_node=None, items_label_set=None, node=None) -> object:
+    def insert_all_items(
+        self, items: [[int, int]], memoized_branches=None, items_label_set=None, parent_node=None, node=None
+        ) -> object:
         """
             Creates tree based on items per level.
-            Refer to example tree. 
+            Refer to example tree structure. 
         """
         # create a smart tree (will be unbalanced) 
         # create a datastructure that keeps track of branches. Don't bother building
@@ -64,7 +67,7 @@ class KnapsackTree:
         if items_label_set is None:
             items_label_set, labels_list = self.create_labels(items)
         
-        # recurstion vars
+        # recursion vars
         parent = None
         child = None
         
@@ -81,21 +84,30 @@ class KnapsackTree:
                     if not node.children[labels_list[i]]:
                         # check if max weight has been reached
                         if (node.weight - item_weight) <= 0:
-                            
-                            # update values accordingly
-                            item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
+                            # *** CONDITION TO CHECK IF ITEM LABEL IS NOT IN A PATH IN ANOTHER BRANCH ON A HIGHER LEVEL***
+                            if memoized_branches is not None:
+                                for branch in memoized_branches:
+                                    if item_label not in branch[-1]:
+                                        # IF ITEM NOT IN ANY OTHER BRANCH ON A HIGHER LEVEL
+                                        if not parent.childred[item_label]:
+                                            # update values accordingly
+                                            item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
+        
                 else:
                     parent_label = parent.label
                     child_label = child.label
+                    # if it does, traverse through tree and create key-value pairs
                     self.memoize_branches(parent_label, child_label)
-                # if it does, traverse through tree and create key-value pairs
+
                 parent = node
                 child = node.children[item_label]
-
-        # subproblem_1: decide whether or not to take the item
-        return self.insert_all_items(items, items_label_set, parent, child)
+            
+            if memoized_branches is None:
+                memoized_branches_ = self.memoize_branches(parent_label, child_label)
+                return self.insert_all_items(items, memoized_branches_, items_label_set, parent, child)
+            return self.insert_all_items(items, memoized_branches, items_label_set, parent, child)
     
-    def memoize_branches(self, parent_label, child_label):
+    def memoize_branches(self, parent_label, child_label, branches=None):
         """
             Creates a 2d list of memoized labels 
         """
@@ -109,15 +121,25 @@ class KnapsackTree:
         #   ["root", "c", "b"],
         # ]
 
-        branches = list()
+        if branches is None:
+            branches = list()
 
-        for label_ in branches:
-            
+        for branch in branches:
             if len(branches) == 0:
                 branches.append([parent_label, child_label])
+            else:
+                if branch[-1] == parent_label:
+                    branch.append(child_label)
+        
+        return branches
 
-        # if path exists, don't create
+    def branch_check(self, parent_label, child_label)->bool:
+        branches = self.memoize_branches(parent_label, child_label)
 
+
+        # loop through branch that label is contained in
+        # then, find if the chain already exists
+        
     
     def memoize_items(self, items: [[int, int]]):
         pass
@@ -127,3 +149,4 @@ class KnapsackTree:
             Returns the max value of the constructed tree 
         """
         node = self.root
+        pass
