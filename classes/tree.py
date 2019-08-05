@@ -134,6 +134,7 @@ class KnapsackTree:
         """
             Returns the max value of the constructed tree 
         """
-    
-     
+        node = self.root
         
+        pass
+            
