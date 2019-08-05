@@ -9,4 +9,11 @@ class KnapsackTreeNode:
             #  {
                 # "root": KnapsackTreeNode(LABEL, max_bag_cap - ITEM_WEIGHT, item_value + ITEM_VALUE)
             # }
+    
+    def is_leaf(self):
+        """
+            Returns true if node has no children.
+        """
+
+        return self.children is None
            

@@ -55,9 +55,6 @@ class KnapsackTree:
             Creates tree based on items per level.
             Refer to example tree structure. 
         """
-        # create a smart tree (will be unbalanced) 
-        # create a datastructure that keeps track of branches. Don't bother building
-        # from A -> B -> C -> D when we already have a A -> C -> B -> D 
         
         # start nodes
         if node is None:
@@ -137,5 +134,6 @@ class KnapsackTree:
         """
             Returns the max value of the constructed tree 
         """
-        node = self.root
-        pass
+    
+     
+        
