@@ -88,7 +88,7 @@ class KnapsackTree:
                             if memoized_branches is not None:
                                 for branch in memoized_branches:
                                     if item_label not in branch[-1]:
-                                        # IF ITEM NOT IN ANY OTHER BRANCH ON A HIGHER LEVEL
+                                        # IF ITEM NOT IN ANY OTHER BRANCH ON A +1 LEVEL
                                         if not parent.childred[item_label]:
                                             # update values accordingly
                                             item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
@@ -101,7 +101,7 @@ class KnapsackTree:
 
                 parent = node
                 child = node.children[item_label]
-            
+        
             if memoized_branches is None:
                 memoized_branches_ = self.memoize_branches(parent_label, child_label)
                 return self.insert_all_items(items, memoized_branches_, items_label_set, parent, child)
@@ -132,14 +132,6 @@ class KnapsackTree:
                     branch.append(child_label)
         
         return branches
-
-    def branch_check(self, parent_label, child_label)->bool:
-        branches = self.memoize_branches(parent_label, child_label)
-
-
-        # loop through branch that label is contained in
-        # then, find if the chain already exists
-        
     
     def memoize_items(self, items: [[int, int]]):
         pass
