@@ -2,4 +2,4 @@
 
 ## [Knapsack Problem](knapsack.md)
 
-## LCS Problem
+## [Egg Dropping Puzzle](egg.md)
