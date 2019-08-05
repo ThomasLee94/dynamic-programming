@@ -132,9 +132,6 @@ class KnapsackTree:
                     branch.append(child_label)
         
         return branches
-    
-    def memoize_items(self, items: [[int, int]]):
-        pass
 
     def return_max_value(self):
         """
