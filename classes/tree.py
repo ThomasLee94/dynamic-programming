@@ -52,7 +52,7 @@ class KnapsackTree:
         self, items: [[int, int]], memoized_branches=None, items_label_set=None, parent_node=None, node=None
         ) -> object:
         """
-            Creates tree based on items per level.
+            Creates tree recursively based on items per level.
             Refer to example tree structure. 
         """
         
@@ -91,12 +91,14 @@ class KnapsackTree:
                                             item_label = KnapsackTreeNode(item_label, node.weight - item_weight, node.value + item_value)
         
                 else:
+                    # vars for memoization
                     parent_label = parent.label
                     child_label = child.label
                     # if it does, traverse through tree and create key-value pairs
                     self.memoize_branches(parent_label, child_label)
 
                 parent = node
+                # Create key-value pairs
                 child = node.children[item_label]
         
             if memoized_branches is None:
