@@ -15,8 +15,8 @@ def challenge_4_1_bad():
     items = [[3, 4], [2, 3], [1, 1]]
     empty_tree = KnapsackTree(10)
     tree = empty_tree.insert_all_items(items)
-    max_value = tree.return_max_value
-    return max_value
+    node_weight, highest_value, visited_list = tree.return_max_value
+    return highest_value
 
 
 challenge_4_1_bad()

@@ -78,7 +78,7 @@ class KnapsackTree:
         child = None
 
         # Recursively create tree
-        for i in range(items):
+        for i in range(len(items)):
             if KnapsackTree is None:
                 # init vars
                 item_label = labels_list[i]
@@ -158,16 +158,16 @@ class KnapsackTree:
 
     def return_max_value(
         self, visited_list: [str], visited_set, node=None, highest_value=0
-    ) -> ([str]):
+    ) -> (int, int, [str]):
         """
-                Returns the max value of the constructed tree with remaining bag
-                weight and visited nodes.
+                Returns the max value of the constructed tree with
+                remaining bag weight and visited nodes.
                 Args
-                    visited_list: keeps track of visited verticies in order of 
+                    visited_list: keeps track of visited verticies in order of
                     traversal.
                     visited: set method to keep track of visited verticies.
                 Returns
-                    (remaining_weight, highest_value, visited_nodes: [str])
+                    remaining_weight, highest_value, visited_nodes: [str]
             """
 
         node = self.root
@@ -186,4 +186,4 @@ class KnapsackTree:
                 return self.return_max_value(child, visited_list, visited_set)
 
         # Catch all
-        return (node.weight, highest_value, visited_list)
+        return node.weight, highest_value, visited_list
