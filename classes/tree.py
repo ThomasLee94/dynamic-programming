@@ -62,7 +62,7 @@ class KnapsackTree:
     ) -> object:
         """
             Creates tree recursively based on items per level.
-            Refer to example tree structure. 
+            Refer to example tree structure.
         """
 
         # start nodes
@@ -104,31 +104,28 @@ class KnapsackTree:
                                                 node.weight - item_weight,
                                                 node.value + item_value,
                                             )
+                        else:
+                            # if max weight has been exceeded
+                            return
 
                 else:
                     # vars for memoization
                     parent_label = parent.label
                     child_label = child.label
                     # memoize branch labels
-                    self.memoize_branches(parent_label, child_label)
+                    memoized_branches = self.memoize_branches(
+                        parent_label, child_label
+                    )
 
                 # keeping track of parent and children to check
                 # other branches when creating new ones.
                 parent = node
                 child = node.children[item_label]
 
-            # recursive call, create memoized 2d list for init.
-            if memoized_branches is None:
-                memoized_branches_ = self.memoize_branches(
-                    parent_label, child_label
-                )
-                return self.insert_all_items(
-                    items, memoized_branches_, items_label_set, parent, child
-                )
-            # 1st recursive call onwards
-            return self.insert_all_items(
-                items, memoized_branches, items_label_set, parent, child
-            )
+        # 1st recursive call onwards
+        return self.insert_all_items(
+            items, memoized_branches, items_label_set, parent, child
+        )
 
     def memoize_branches(self, parent_label, child_label, branches=None):
         """
