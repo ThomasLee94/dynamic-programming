@@ -10,11 +10,14 @@
 
 from classes.tree import KnapsackTree
 
-def __main__():
-    items = [[3,4],[2,3],[1,1]]
+
+def challenge_4_1_bad():
+    items = [[3, 4], [2, 3], [1, 1]]
     empty_tree = KnapsackTree(10)
     tree = empty_tree.insert_all_items(items)
     max_value = tree.return_max_value
     return max_value
 
-main()
+
+challenge_4_1_bad()
+
