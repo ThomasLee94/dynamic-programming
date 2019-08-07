@@ -12,3 +12,5 @@ Assumptions:
 
 Suppose 2 eggs are available, what is the minimum number of drops required to know from which if egg the egg is dropped, it will break. 
 
+We are minimising the use of eggs to find the pivotal floor in the worst case. 
+
