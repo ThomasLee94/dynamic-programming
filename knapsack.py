@@ -30,13 +30,10 @@ def knapsack_good(
     #   (capacity, item_index): total_value
     # }
 
-    # retreiving values from memoized dict
-    print(f"BAGCAP: {bag_cap}")
-    print(f"ITEM_INDEX: {item_index}")
-    print(f"MEM_VAL_INDEX: {mem_val_index}")
+    # if values are already memoized, retrieve from dict
     if (bag_cap, item_index) in mem_val_index:
-        print("I AM USING MEMOIZATION!!!!!!")
         return mem_val_index[(bag_cap, item_index)]
+
     else:
         # base cases
         if item_index >= len(items):
@@ -53,7 +50,7 @@ def knapsack_good(
         if item[1] > bag_cap:
             return knapsack_good(bag_cap, items, mem_val_index, item_index + 1)
 
-        # decision tree
+        # === DECISION TREE ===
         # we add item_value because it doesn't have the item_value from the
         # previous recursive call
         item_add = (
@@ -67,7 +64,9 @@ def knapsack_good(
             bag_cap, items, mem_val_index, item_index + 1
         )
 
+        # get the maximum from both decisions from tree
         total_value = max(item_add, item_not_add)
+        # update memoization
         mem_val_index[(bag_cap, item_index)] = total_value
 
         return total_value
