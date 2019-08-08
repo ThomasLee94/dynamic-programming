@@ -35,11 +35,14 @@ def knapsack_good(
         return mem_val_index[(bag_cap, item_index)]
 
     else:
-        # base cases
+        # === BASE CASES ===
+        # case: item index exceeds length of items list
         if item_index >= len(items):
             return 0
+        # case: no items
         if len(items) == 0:
             return 0
+        # case: knapsack capacity exceeded
         if bag_cap <= 0:
             return 0
 
@@ -66,7 +69,7 @@ def knapsack_good(
 
         # get the maximum from both decisions from tree
         total_value = max(item_add, item_not_add)
-        # update memoization
+        # update memoization 
         mem_val_index[(bag_cap, item_index)] = total_value
 
         return total_value
