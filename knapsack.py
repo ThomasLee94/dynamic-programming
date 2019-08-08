@@ -22,9 +22,13 @@
 # knapsack_bad()
 
 
-def knapsack_good(
+def knapsack(
     bag_cap: int, items: [[str, int, int]], mem_val_index: dict, item_index=0
-):
+) -> int:
+    """
+        This functions returns the highest value of combined given items
+        to the constraint of the knapsack capacity. 
+    """
     # MEMOIZED DICT EXAMPLE
     # {
     #   (capacity, item_index): total_value
@@ -51,19 +55,21 @@ def knapsack_good(
         item_value = item[2]
 
         if item[1] > bag_cap:
-            return knapsack_good(bag_cap, items, mem_val_index, item_index + 1)
+            return knapsack(bag_cap, items, mem_val_index, item_index + 1)
 
         # === DECISION TREE ===
         # we add item_value because it doesn't have the item_value from the
         # previous recursive call
+        # add current item
         item_add = (
-            knapsack_good(
+            knapsack(
                 bag_cap - item_weight, items, mem_val_index, item_index + 1
             )
             + item_value
         )
         # no need to add item_value from the previous recurisve call
-        item_not_add = knapsack_good(
+        # dont' add current item
+        item_not_add = knapsack(
             bag_cap, items, mem_val_index, item_index + 1
         )
 
@@ -75,4 +81,4 @@ def knapsack_good(
         return total_value
 
 
-print(knapsack_good(10, [["a", 2, 3], ["b", 3, 1], ["d", 8, 1]], {}))
+print(knapsack(10, [["a", 2, 3], ["b", 3, 1], ["d", 8, 1]], {}))
