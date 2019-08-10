@@ -29,7 +29,7 @@ def knapsack(
         This functions returns the highest value of combined given items
         to the constraint of the knapsack capacity. 
     """
-    # MEMOIZED DICT EXAMPLE
+    # MEMOIZED DICT EXAMPLE:
     # {
     #   (capacity, item_index): total_value
     # }
@@ -58,9 +58,9 @@ def knapsack(
             return knapsack(bag_cap, items, mem_val_index, item_index + 1)
 
         # === DECISION TREE ===
-        # we add item_value because it doesn't have the item_value from the
-        # previous recursive call
-        # add current item
+        # we add item_value because it doesn't have the item_value 
+        # from the previous recursive call.
+        # ADD CURRENT ITEM
         item_add = (
             knapsack(
                 bag_cap - item_weight, items, mem_val_index, item_index + 1
@@ -68,7 +68,7 @@ def knapsack(
             + item_value
         )
         # no need to add item_value from the previous recurisve call
-        # dont' add current item
+        # DON'T ADD CURRENT ITEM
         item_not_add = knapsack(
             bag_cap, items, mem_val_index, item_index + 1
         )
