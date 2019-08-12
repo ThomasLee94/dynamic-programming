@@ -14,3 +14,15 @@ Suppose 2 eggs are available, what is the minimum number of drops required to kn
 
 We are minimising the use of eggs to find the pivotal floor in the worst case. 
 
+## The 5 Steps to DP
+    - 1 Identify the sub-problems
+        a. Where do we make the first egg drop? Depends on the amount of floors. 
+        b. Whether the egg breaks or not. 
+    - 2 Guess first choice
+        a. Where we make the first egg drop. 
+    - 3 Recursively define the value of an optimal solution
+        a. We minimising the number of drops needed to find the pivotal floor in which the egg drops. 
+    - 4 Compute the value of an optimal solution
+        a. 
+    - 5 Solve original problem - reconstruct from sub-problems
+
