@@ -48,6 +48,7 @@ def drop_egg(total_floors: int, total_eggs: int, memoized_list=None) -> int:
 
     # === FOR EVERY FLOOR ===
     for floor in range(1, total_floors + 1):
+
         # === DECISION TREE ===
         # case: egg breaks, minus current floor by 1 because we only consider
         # floors below it
@@ -60,13 +61,10 @@ def drop_egg(total_floors: int, total_eggs: int, memoized_list=None) -> int:
         # maximum value from the 2 decisions
         worst_case_drops_num = max(broken_egg, egg)
         # +1 because because we want to account for the current floor
-        worst_case_drops_num + 1
+        worst_case_drops_num += 1
 
         # update memoization
-        # print(f"total floors: {total_floors}")
-        # print(f"total eggs: {total_eggs}")
-        # print(memoized_list)
-        memoized_list[floor - 1][total_eggs - 1] = min(
+        memoized_list[total_floors - 1][total_eggs - 1] = min(
             worst_case_drops_num,
             memoized_list[total_floors - 1][total_eggs - 1],
         )
@@ -74,4 +72,4 @@ def drop_egg(total_floors: int, total_eggs: int, memoized_list=None) -> int:
     return memoized_list[total_floors - 1][total_eggs - 1]
 
 
-print(drop_egg(4, 2))
+print(drop_egg(127, 7))
