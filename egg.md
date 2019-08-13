@@ -16,13 +16,14 @@ We are minimising the use of eggs to find the pivotal floor in the worst case.
 
 ## The 5 Steps to DP
     - 1 Identify the sub-problems
-        a. Where do we make the first egg drop? Depends on the amount of floors. 
+        a. Where do we make the first egg drop? How do we figure out the rest after the first drop.
         b. Whether the egg breaks or not. 
     - 2 Guess first choice
         a. Where we make the first egg drop. 
     - 3 Recursively define the value of an optimal solution
-        a. We minimising the number of drops needed to find the pivotal floor in which the egg drops. 
+        a. Computing whether egg breaks or not for every floor bottom up.
     - 4 Compute the value of an optimal solution
-        a. 
+        a. Getting the maximum value of egg & broken_egg
+        b. We minimising the number of drops needed to find the pivotal floor in which the egg drops. 
     - 5 Solve original problem - reconstruct from sub-problems
-
+        a. Solution is the max. 
